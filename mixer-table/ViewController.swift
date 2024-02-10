@@ -73,6 +73,12 @@ class ViewController: UIViewController {
         var snapshot = NSDiffableDataSourceSnapshot<String, Item.ID>()
         snapshot.appendSections([""])
         snapshot.appendItems(itemIds)
+        
+        // Если мы не меняем класс ячейки элемента, а меняем только данные, то можно вызвать метод reconfigureItems
+        // так внутренняя верстка ячейки будет изменяться анимационно,
+        // (!) но метод доступен только в 15 iOS
+        // Иначе вызывали бы метод reloadItems
+        
         snapshot.reconfigureItems(updatedIdentifiers)
         
         dataSource.apply(snapshot)
